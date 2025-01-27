@@ -1,0 +1,44 @@
+[
+    {
+        "name": "The Rockers",
+        "formationYear": 1995,
+        "firstAlbumYear": 1998,
+        "members": 4,
+        "concertLocations": ["New York, USA", "London, UK", "Paris, France"]
+    },
+    {
+        "name": "Jazz Fusion",
+        "formationYear": 2005,
+        "firstAlbumYear": 2007,
+        "members": 5,
+        "concertLocations": ["Chicago, USA", "Tokyo, Japan"]
+    },
+    {
+        "name": "Metal Titans",
+        "formationYear": 1988,
+        "firstAlbumYear": 1990,
+        "members": 6,
+        "concertLocations": ["Los Angeles, USA", "Berlin, Germany"]
+    },
+    {
+        "name": "Pop Stars",
+        "formationYear": 2010,
+        "firstAlbumYear": 2012,
+        "members": 3,
+        "concertLocations": ["Miami, USA", "Sydney, Australia"]
+    },
+    {
+        "name": "Indie Vibes",
+        "formationYear": 2000,
+        "firstAlbumYear": 2003,
+        "members": 4,
+        "concertLocations": ["Seattle, USA", "Toronto, Canada"]
+    },
+    {
+        "name": "Classical Ensemble",
+        "formationYear": 1980,
+        "firstAlbumYear": 1985,
+        "members": 8,
+        "concertLocations": ["Vienna, Austria", "Berlin, Germany"]
+    }
+]
