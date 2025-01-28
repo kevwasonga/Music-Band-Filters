@@ -7,18 +7,18 @@ import (
 )
 
 type Band struct {
-	Name             string   `json:"name"`             // Matches "name" in JSON
-	FormationYear    int      `json:"formationYear"`    // Matches "formationYear" in JSON
-	FirstAlbumYear   int      `json:"firstAlbumYear"`   // Matches "firstAlbumYear" in JSON
-	Members          int      `json:"members"`          // Matches "members" in JSON
-	ConcertLocations []string `json:"concertLocations"` // Matches "concertLocations" in JSON
+	Name             string              `json:"name"`
+	FormationYear    int                 `json:"formationYear"`
+	FirstAlbumYear   int                 `json:"firstAlbumYear"`
+	Members          int                 `json:"members"`
+	ConcertLocations map[string][]string `json:"concertLocations"` // Updated to match JSON structure
 }
 
 func LoadBands(filepath string) ([]Band, error) {
-	JSONFilePath := "data/bands.json" // Default file path for the JSON file
+	const defaultFilePath = "data/bands.json"
 
 	if filepath == "" {
-		filepath = JSONFilePath
+		filepath = defaultFilePath
 	}
 
 	// Read the JSON file
@@ -29,14 +29,12 @@ func LoadBands(filepath string) ([]Band, error) {
 
 	// Unmarshal the JSON data into a slice of Band structs
 	var bands []Band
-
-	err = json.Unmarshal(file, &bands)
-	if err != nil {
+	if err := json.Unmarshal(file, &bands); err != nil {
 		return nil, fmt.Errorf("error unmarshalling JSON: %w", err)
 	}
 
 	// Print the loaded bands for testing
-	//fmt.Println("Loaded bands:", bands)
+	fmt.Println("Loaded bands:", bands)
 
 	return bands, nil
 }
