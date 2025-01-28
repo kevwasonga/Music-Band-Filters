@@ -27,22 +27,19 @@ func FilterBandsHandler(w http.ResponseWriter, r *http.Request) {
 	minFirstAlbumYear, _ := strconv.Atoi(query.Get("minFirstAlbumYear"))
 	maxFirstAlbumYear, _ := strconv.Atoi(query.Get("maxFirstAlbumYear"))
 
-
 	minMembers, _ := strconv.Atoi(query.Get("minMembers"))
 
 	maxMembers, _ := strconv.Atoi(query.Get("maxMembers"))
 
 	locations := query["locations"] // Get array of locations
 
-	fmt.Println("minFrYear: ", minFirstAlbumYear,"\n maxFrYear: ", maxFirstAlbumYear,"\nminFoYear: ", minFormationYear,"\n maxFoYear: ", maxFormationYear,"\nminMembers: ", minMembers,"\nmaxMembers: ", maxMembers, "\nLocations: ", locations)
+	fmt.Println("minFrYear: ", minFirstAlbumYear, "\n maxFrYear: ", maxFirstAlbumYear, "\nminFoYear: ", minFormationYear, "\n maxFoYear: ", maxFormationYear, "\nminMembers: ", minMembers, "\nmaxMembers: ", maxMembers, "\nLocations: ", locations)
 
 	// Apply filters to the bands
 	filteredBands := filterBands(bands, minFormationYear, maxFormationYear, minFirstAlbumYear, maxFirstAlbumYear, minMembers, maxMembers, locations)
 
 	// Set response headers
 	w.Header().Set("Content-Type", "application/json")
-
-	
 
 	// Encode and return the filtered bands
 	err = json.NewEncoder(w).Encode(filteredBands)
@@ -84,7 +81,7 @@ func filterBands(bands []services.Band, minFormationYear, maxFormationYear, minF
 		if len(locations) > 0 {
 			locationMatch := false
 			for _, location := range locations {
-				if contains(band.ConcertLocations, location) {
+				if _, exists := band.ConcertLocations[location]; exists {
 					locationMatch = true
 					break
 				}
