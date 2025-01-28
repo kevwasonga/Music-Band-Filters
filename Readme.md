@@ -1,9 +1,6 @@
 
 # **Music Band Explorer- Filters**
 
-![Music Band Explorer Screenshot](https://via.placeholder.com/800x400.png?text=Music+Band+Explorer+Screenshot)  
-*(Replace with an actual screenshot of your project once it's ready)*
-
 **Music Band Explorer** is a web application that allows users to explore and filter music bands based on specific criteria. Users can filter bands by formation year, first album year, number of members, and concert locations. The application features a clean and intuitive interface, making it easy to discover bands that match your preferences.
 
 ---
