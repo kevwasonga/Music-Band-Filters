@@ -17,8 +17,8 @@ func main() {
 	http.Handle("/", fs)
 
 	// Band-related endpoints
-	http.HandleFunc("/bands", models.BandsHandler)
-	http.HandleFunc("/filter", models.FilterBandsHandler)
+	 http.HandleFunc("/bands", models.BandsHandler)// this  handler displays the data of all artsists
+	http.HandleFunc("/filter", models.FilterBandsHandler)// displays data of fltered artists only	
 
 	// Health check endpoint
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
