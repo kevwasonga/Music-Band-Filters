@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Band Explorer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Music Band Explorer</h1>
+
+        <!-- Filter Section -->
+        <div class="filters">
+            <!-- Formation Year Range -->
+            <div class="filter">
+                <label for="formationYear">Formation Year:</label>
+                <input type="number" id="minFormationYear" placeholder="Min Year">
+                <input type="number" id="maxFormationYear" placeholder="Max Year">
+            </div>
+
+            <!-- First Album Year Range -->
+            <div class="filter">
+                <label for="firstAlbumYear">First Album Year:</label>
+                <input type="number" id="minFirstAlbumYear" placeholder="Min Year">
+                <input type="number" id="maxFirstAlbumYear" placeholder="Max Year">
+            </div>
+
+            <!-- Number of Members Range -->
+            <div class="filter">
+                <label for="members">Number of Members:</label>
+                <input type="number" id="minMembers" placeholder="Min Members">
+                <input type="number" id="maxMembers" placeholder="Max Members">
+            </div>
+
+            <!-- Concert Locations Checkboxes -->
+            <div class="filter">
+                <label>Concert Locations:</label>
+                <div id="locationCheckboxes">
+                    <!-- Locations will be populated dynamically using JavaScript -->
+                </div>
+            </div>
+
+            <!-- Filter Button -->
+            <button id="filterButton">Apply Filters</button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results">
+            <h2>Filtered Bands</h2>
+            <ul id="bandList">
+                <!-- Filtered bands will be displayed here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Assuming you have a list of all possible concert locations.
+        const locations = ["New York", "Los Angeles", "Chicago", "London", "Tokyo", "Paris", "Berlin"];
+
+        // Dynamically populate the locations checkboxes
+        const locationCheckboxesContainer = document.getElementById('locationCheckboxes');
+        locations.forEach(location => {
+            const checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+            checkbox.value = location;
+            checkbox.id = location;
+            const label = document.createElement('label');
+            label.setAttribute('for', location);
+            label.innerText = location;
+            locationCheckboxesContainer.appendChild(checkbox);
+            locationCheckboxesContainer.appendChild(label);
+            locationCheckboxesContainer.appendChild(document.createElement('br'));
+        });
+
+        // Function to get all selected locations from checkboxes
+        function getSelectedLocations() {
+            const selectedLocations = [];
+            const checkboxes = document.querySelectorAll('#locationCheckboxes input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                selectedLocations.push(checkbox.value);
+            });
+            return selectedLocations;
+        }
+
+        // Apply Filters
+        document.getElementById('filterButton').addEventListener('click', function() {
+            // Get values from the input fields
+            const minFormationYear = document.getElementById('minFormationYear').value || '';
+            const maxFormationYear = document.getElementById('maxFormationYear').value || '';
+            const minFirstAlbumYear = document.getElementById('minFirstAlbumYear').value || '';
+            const maxFirstAlbumYear = document.getElementById('maxFirstAlbumYear').value || '';
+            const minMembers = document.getElementById('minMembers').value || '';
+            const maxMembers = document.getElementById('maxMembers').value || '';
+            const locations = getSelectedLocations();
+
+            // Build the query string
+            let query = `minFormationYear=${minFormationYear}&maxFormationYear=${maxFormationYear}&minFirstAlbumYear=${minFirstAlbumYear}&maxFirstAlbumYear=${maxFirstAlbumYear}&minMembers=${minMembers}&maxMembers=${maxMembers}`;
+            if (locations.length > 0) {
+                query += `&locations=${locations.join('&locations=')}`;
+            }
+
+            // Fetch filtered bands from the server
+            fetch(`/filter?${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Display the filtered bands
+                    const bandList = document.getElementById('bandList');
+                    bandList.innerHTML = '';  // Clear any previous results
+                    data.forEach(band => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Band Name: ${band.name}, Formation Year: ${band.formationYear}, Members: ${band.members}`;
+                        bandList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching filtered bands:', error);
+                });
+        });
+    </script>
+</body>
+</html>
