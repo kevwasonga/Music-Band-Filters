@@ -36,7 +36,7 @@ func LoadBands(filepath string) ([]Band, error) {
 	}
 
 	// Print the loaded bands for testing
-	fmt.Println("Loaded bands:", bands)
+	//fmt.Println("Loaded bands:", bands)
 
 	return bands, nil
 }
